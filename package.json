@@ -5,10 +5,8 @@
   "main": "server.js",
   "scripts": {
     "babel": "babel --presets es2015 client/js -o client/build/main.bundle.js",
-    "client": "npm run babel && node client/host.js",
-    "watchClient": "nodemon --watch client --exec npm run client",
-    "server": "babel-node server/server.js --presets es2015",
-    "watchServer": "nodemon --watch server --exec npm run server"
+    "start": "babel-node server/server.js --presets es2015",
+    "watch": "nodemon --watch start --exec npm run start"
   },
   "author": "ryan j muskopf",
   "license": "ISC",

@@ -111,12 +111,14 @@ let schema = new GraphQLSchema({ query: queryType });
 
 let app = express();
 
+const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
+
 //FIXES CORS ERROR
 //https://forums.meteor.com/t/solved-cors-errors-with-apollo-on-meteor-1-4x/29465
-var whitelist = [
+let whitelist = [
     'http://localhost:4200',
 ];
-var corsOptions = {
+let corsOptions = {
     origin: function (origin, callback) {
         var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
         callback(null, originIsWhitelisted);
@@ -129,5 +131,9 @@ app.use('/graphql', graphqlHTTP({
     schema: schema,
     graphiql: true,
 }));
-app.listen(4000);
-console.log('Running a GraphQL API server at localhost:4000/graphql');
+app.listen(PORT, (err) => {
+    if (err) {
+        throw err;
+    }
+    console.log(`Running a GraphQL API server at ${PORT}/graphql`);
+});

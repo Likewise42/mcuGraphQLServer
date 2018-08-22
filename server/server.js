@@ -116,7 +116,7 @@ const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
 //FIXES CORS ERROR
 //https://forums.meteor.com/t/solved-cors-errors-with-apollo-on-meteor-1-4x/29465
 let whitelist = [
-    'http://localhost:4200',
+    '*',
 ];
 let corsOptions = {
     origin: function (origin, callback) {

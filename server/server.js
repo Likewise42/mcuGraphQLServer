@@ -113,19 +113,7 @@ let app = express();
 
 const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
 
-//FIXES CORS ERROR
-//https://forums.meteor.com/t/solved-cors-errors-with-apollo-on-meteor-1-4x/29465
-let whitelist = [
-    '*',
-];
-let corsOptions = {
-    origin: function (origin, callback) {
-        var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-        callback(null, originIsWhitelisted);
-    },
-    credentials: true
-};
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(meta.onCall);
 app.use('/graphql', graphqlHTTP({
     schema: schema,

@@ -1,5 +1,8 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLList, GraphQLInt, GraphQLString } from 'graphql';
 
+import * as actors from './actors';
+import * as characters from './characters';
+
 //data for adding ids to new movies
 let nextId = 0;
 let movieDatabase = {};
@@ -147,5 +150,3 @@ export {
     getTopFive
 };
 
-import * as actors from './actors';
-import * as characters from './characters';

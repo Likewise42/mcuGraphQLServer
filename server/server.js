@@ -111,9 +111,26 @@ let schema = new GraphQLSchema({ query: queryType });
 
 let app = express();
 
-const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
+const PORT = process.env.PORT || process.env.NODE_PORT || 4000;
+if (process.env.NODE_ENV = 'production') {
+    app.use(cors());
+}
+/*else {
+    //FIXES CORS ERROR
+    //https://forums.meteor.com/t/solved-cors-errors-with-apollo-on-meteor-1-4x/29465
+    var whitelist = [
+        'http://localhost:4200',
+    ];
+    var corsOptions = {
+        origin: function (origin, callback) {
+            var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+            callback(null, originIsWhitelisted);
+        },
+        credentials: true
+    };
 
-app.use(cors());
+    app.use(cors(corsOptions));
+}*/
 app.use(meta.onCall);
 app.use('/graphql', graphqlHTTP({
     schema: schema,

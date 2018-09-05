@@ -144,6 +144,7 @@ let updateTopFive = () => {
 
 export {
     movieType,
+    addMovie,
     getMovie,
     getRandomMovie,
     getMovies,

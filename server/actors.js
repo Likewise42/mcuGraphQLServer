@@ -20,13 +20,15 @@ class Actor {
     constructor(name, movieList, age, characterList) {
         this.name = name;
         this.age = age;
+        this.movieList = movieList;
+        this.characterList = characterList;
 
         this.movies = () => {
-            return movies.getMovies(movieList);
+            return movies.getMovies(this.movieList);
         };
 
         this.characters = () => {
-            return characters.getCharacters(characterList);
+            return characters.getCharacters(this.characterList);
         };
 
         this.id = getNextId();
@@ -35,11 +37,25 @@ class Actor {
     }
 }
 
-
-let addActor = (name, movieList, age, characterList) => {
+const addActor = (name, movieList, age, characterList) => {
     let newActor = new Actor(name, movieList, age, characterList);
 
     actorDatabase[newActor.id] = newActor;
+}
+
+const mutateAddActor = (name, movieList, age, characterList) => {
+    const actorId = nextId;
+
+    addActor(name, movieList, age, characterList);
+
+    movieList.forEach((movie)=>{
+        movies.movieDatabase[movie].actorList.push(actorId.toString());
+    })
+
+    characterList.forEach((character)=>{
+        characters.characterDatabase[character].actorList.push(actorId.toString());
+    })
+
 }
 
 //iron man 1 actors
@@ -160,6 +176,8 @@ let updateTopFive = () => {
 
 export {
     actorType,
+    actorDatabase,
+    mutateAddActor,
     getActor,
     getRandomActor,
     getActors,

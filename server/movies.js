@@ -22,13 +22,15 @@ class Movie {
     constructor(title, actorList, runTime, characterList) {
         this.title = title;
         this.runTime = runTime;
+        this.actorList = actorList;
+        this.characterList = characterList;
 
         this.actors = () => {
-            return actors.getActors(actorList)
+            return actors.getActors(this.actorList)
         };
 
         this.characters = () => {
-            return characters.getCharacters(characterList);
+            return characters.getCharacters(this.characterList);
         };
 
         this.id = getNextId();
@@ -37,10 +39,25 @@ class Movie {
     }
 }
 
-let addMovie = (title, actorList, runTime, characterList) => {
+const addMovie = (title, actorList, runTime, characterList) => {
     let newMovie = new Movie(title, actorList, runTime, characterList);
 
     movieDatabase[newMovie.id] = newMovie;
+}
+
+const mutateAddMovie = (title, actorList, runTime, characterList) => {
+    const movieId = nextId;
+
+    addMovie(title, actorList, runTime, characterList);
+
+    actorList.forEach((actor) => {
+        actors.actorDatabase[actor].movieList.push(movieId.toString());
+    })
+
+    characterList.forEach((character) => {
+        characters.characterDatabase[character].movieList.push(movieId.toString());
+    })
+
 }
 
 //phase 1 movies
@@ -95,6 +112,8 @@ let getRandomMovie = () => {
 
 let getMovies = (ids) => {
 
+    console.log(ids)
+
     let returnArray = [];
 
     if (ids == undefined) {
@@ -135,16 +154,17 @@ let updateTopFive = () => {
         returnArray.push(getMovie(id));
     });
 
-    returnArray.sort((a,b)=>{
+    returnArray.sort((a, b) => {
         return b.timesAccessed - a.timesAccessed;
     })
 
-    topFive.movies = returnArray.slice(0,5);
+    topFive.movies = returnArray.slice(0, 5);
 }
 
 export {
     movieType,
-    addMovie,
+    movieDatabase,
+    mutateAddMovie,
     getMovie,
     getRandomMovie,
     getMovies,

@@ -113,8 +113,32 @@ let mutationType = new GraphQLObjectType({
                 characterList: { type: GraphQLList(GraphQLString) }
             },
             resolve: (value, args)=>{
-                console.log(`value: ${value}`);
-                movies.addMovie(args.title, args.actorList, args.runTime, args.characterList);
+                movies.mutateAddMovie(args.title, args.actorList, args.runTime, args.characterList);
+                return "good";
+            }
+        },
+        addActor: {
+            type: GraphQLString,
+            args: {
+                name: { type: GraphQLString },
+                movieList: { type: GraphQLList(GraphQLString) },
+                age: { type: GraphQLInt },
+                characterList: { type: GraphQLList(GraphQLString) }
+            },
+            resolve: (value, args)=>{
+                actors.mutateAddActor(args.name, args.movieList, args.age, args.characterList);
+                return "good";
+            }
+        },
+        addCharacter: {
+            type: GraphQLString,
+            args: {
+                name: { type: GraphQLString },
+                movieList: { type: GraphQLList(GraphQLString) },
+                actorList: { type: GraphQLList(GraphQLString) }
+            },
+            resolve: (value, args)=>{
+                characters.mutateAddCharacter(args.name, args.movieList, args.actorList );
                 return "good";
             }
         }

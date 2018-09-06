@@ -19,13 +19,15 @@ let getNextId = () => {
 class Character {
     constructor(name, movieList, actorList) {
         this.name = name;
+        this.movieList = movieList;
+        this.actorList = actorList;
 
         this.movies = () => {
-            return movies.getMovies(movieList);
+            return movies.getMovies(this.movieList);
         };
 
         this.actors = () => {
-            return actors.getActors(actorList);
+            return actors.getActors(this.actorList);
         };
 
         this.id = getNextId();
@@ -34,10 +36,26 @@ class Character {
     }
 }
 
-let addCharacter = (name, movieList, actorList) => {
+const addCharacter = (name, movieList, actorList) => {
     let newCharacter = new Character(name, movieList, actorList);
 
     characterDatabase[newCharacter.id] = newCharacter;
+}
+
+const mutateAddCharacter = (name, movieList, actorList) => {
+    let characterId = nextId;
+
+    addCharacter(name, movieList, actorList);
+
+    movieList.forEach((movie) => {
+        console.log(movie);
+        movies.movieDatabase[movie].characterList.push(characterId.toString());
+    })
+
+    actorList.forEach((actor) => {
+        actors.actorDatabase[actor].characterList.push(characterId.toString());
+    })
+
 }
 
 //iron man 1
@@ -151,15 +169,17 @@ let updateTopFive = () => {
         returnArray.push(getCharacter(id));
     });
 
-    returnArray.sort((a,b)=>{
+    returnArray.sort((a, b) => {
         return b.timesAccessed - a.timesAccessed;
     })
 
-    topFive.characters = returnArray.slice(0,5);
+    topFive.characters = returnArray.slice(0, 5);
 }
 
 export {
     characterType,
+    characterDatabase,
+    mutateAddCharacter,
     getCharacter,
     getRandomCharacter,
     getCharacters,

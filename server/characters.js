@@ -19,8 +19,8 @@ let getNextId = () => {
 class Character {
     constructor(name, movieList, actorList) {
         this.name = name;
-        this.movieList = movieList;
-        this.actorList = actorList;
+        this.movieList = movieList || [];
+        this.actorList = actorList || [];
 
         this.movies = () => {
             return movies.getMovies(this.movieList);
@@ -48,7 +48,6 @@ const mutateAddCharacter = (name, movieList, actorList) => {
     addCharacter(name, movieList, actorList);
 
     movieList.forEach((movie) => {
-        console.log(movie);
         movies.movieDatabase[movie].characterList.push(characterId.toString());
     })
 

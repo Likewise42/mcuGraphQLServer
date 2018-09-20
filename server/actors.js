@@ -20,8 +20,8 @@ class Actor {
     constructor(name, movieList, age, characterList) {
         this.name = name;
         this.age = age;
-        this.movieList = movieList;
-        this.characterList = characterList;
+        this.movieList = movieList || [];
+        this.characterList = characterList || [];
 
         this.movies = () => {
             return movies.getMovies(this.movieList);

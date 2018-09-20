@@ -22,8 +22,8 @@ class Movie {
     constructor(title, actorList, runTime, characterList) {
         this.title = title;
         this.runTime = runTime;
-        this.actorList = actorList;
-        this.characterList = characterList;
+        this.actorList = actorList || [];
+        this.characterList = characterList || [];
 
         this.actors = () => {
             return actors.getActors(this.actorList)
@@ -111,8 +111,6 @@ let getRandomMovie = () => {
 }
 
 let getMovies = (ids) => {
-
-    console.log(ids)
 
     let returnArray = [];
 
